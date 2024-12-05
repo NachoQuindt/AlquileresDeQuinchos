@@ -1,0 +1,111 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Registrar Propiedad para Alquiler</title>  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
+    <style>  
+        body {  
+            background-color: #f8f9fa;  
+            background-image: url('https://i.imgur.com/nzp6cUQ.jpeg');  
+            background-size: cover;  
+            background-position: top;  
+            background-repeat: no-repeat;  
+            min-height: 100vh;  
+            padding: 20px;  
+        }  
+        .form-container {  
+            background-color: rgba(255, 255, 255, 0.8);  
+            padding: 20px;  
+            border-radius: 8px;  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  
+        }  
+        .form-control {  
+            margin-bottom: 10px;  
+        }  
+        .img-preview {  
+            max-width: 100%;  
+            max-height: 200px;  
+            margin-top: 10px;  
+        }  
+        h2 {  
+            color: #343a40;   
+        }  
+        .text-dark {  
+            color: #343a40 !important;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="container form-container mt-5"> 
+        <h2 class="text-center mb-4">Modifique su Propiedad </h2>  
+        <form id="spaceForm" th:action="@{/propiedad/modificarPropiedadEnBase}" th:object="${propiedadPorId}" method="POST" enctype="multipart/form-data">
+           <input type="hidden" id="id" name="id" th:field="*{id}"/>
+            <div class="form-group">  
+                
+                <label for="nombre">Nombre del Espacio:</label>  
+                
+                <input type="text" 
+                       class="form-control" 
+                       id="nombre" 
+                       name="nombre" 
+                       placeholder="Ingresa el nombre del espacio" required th:field="*{nombre}"/>  
+            
+            </div>  
+            <div class="form-group">  
+                <label for="descripcion">Descripcion:</label>  
+                <input type="text" 
+                       class="form-control" 
+                       id="descripcion" 
+                       name="descripcion" 
+                       placeholder="Ingresa la descripcion del espacio" required th:field="*{descripcion}"/>
+            </div>
+            <div class="form-group">  
+                <label for="imagenActual">Imagen actual </label>
+                <img name='imagenActual' th:src="'http://localhost:8080/' + *{imagen}">
+            </div>
+           <div class="form-group">  
+                <label for="imagen">Subir Fotos:</label>  
+                <input type="file" class="form-control" id="imagenNueva" name="imagenNueva" accept="image/*" multiple required>  
+                <div id="imagePreview" class="mt-2"></div> 
+                <input type="hidden" id="imagen" name="imagen" th:field="*{imagen}"/>
+           </div> <!--estas lineas son agregadas-->
+           <div class="text-center mt-3">  
+                <button type="submit" class="btn btn-primary btn-block"> MODIFICAR </button>
+            </div> 
+        </form>
+    </div>  
+    
+
+    <!-- Bootstrap JS and dependencies -->  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>  
+    <script>document.getElementById('imagenNueva').addEventListener('change', function() {  
+            const files = this.files;  
+            const previewDiv = document.getElementById('imagePreview');  
+            previewDiv.innerHTML = '';  
+
+            for (let i = 0; i < files.length; i++) {  
+                const file = files[i]; 
+                if (file) {  
+                    const reader = new FileReader();  
+                    reader.onload = function(e) {  
+                        const imgElement = document.createElement('img');  
+                        imgElement.src = e.target.result;  
+                        imgElement.classList.add('img-preview');  
+                        previewDiv.appendChild(imgElement);  
+                    }  
+                    reader.readAsDataURL(file);
+                    var nombreNuevaImagen = file.name;
+                    console.log(nombreNuevaImagen);
+                    var objHidden = document.getElementById('imagen');
+                    objHidden.value = nombreNuevaImagen;
+                    console.log(document.getElementById('imagen').value);
+                } 
+            }  
+        }); 
+    </script>  
+</body>  
+</html>  
+

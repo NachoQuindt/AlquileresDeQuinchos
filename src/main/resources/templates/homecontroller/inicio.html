@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">  
+    <head>
+        <title>Listado de Usuarios</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Lista de usuarios</div>
+        <a th:href="@{/homecontroller/inicio}" class="btn btn-custom btn-primary">INICIO</a>
+        <div>            
+            <!--<a th:href="@{/usuario/preregistro}">REGISTRAR USUARIO</a>-->
+            <table border="1" width="60%">
+                <thead>
+                    <tr>
+                        <th width="30%">Nombre</th>
+                        <th width="30%">Apellido</th>
+                        <th width="30%">Rol</th>
+                        <th width="20%"></th>
+                        <th width="20%"></th>
+                        <th width="20%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario: ${listaDeUsuario}">
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.apellido}"></td>
+                        <td th:text="${usuario.rol.descripcion}"></td>
+                        <td>
+                            <a th:href="@{/usuario/modificarUsuario/{id}(id=${usuario.id})}">Modificar</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/usuario/eliminar/{id}(id=${usuario.id})}">Delete</a>            
+                        </td>            
+                    </tr>
+                </tbody>
+            </table>
+            <form th:action="@{/usuario/buscarPorNombre}" th:object="${user}" method="POST">
+                <label for="Nombre a buscar">Ingrese el nombre a buscar:</label>
+                <input type="text" id="txtName" name="txtName" th:field="*{nombre}"
+                       placeholder="Ingrese el nombre a buscar"/>
+                <button type="submit">ENVIAR</button>
+            </form>
+        </div>
+    </body>
+</html>

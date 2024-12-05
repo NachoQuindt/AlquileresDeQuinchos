@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="es"
+xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sd="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"> <!-- Agregar tu CSS aquí -->
+    <style>
+        .navbar {
+            background-color: rgb(255, 255, 255);
+            padding: 1rem 2rem;
+        }
+
+        .logo-img {
+            height: 80px;
+            transition: transform 0.3s ease;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #ffffff 10%, #c1a95b 60%, #aa815f 100%);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .btn-custom.btn-outline-primary {
+            background-color: #ffffff;
+            border-color: rgb(50, 20, 20);
+            color: rgb(50, 20, 20);
+        }
+
+        .btn-custom.btn-outline-primary:hover {
+            background-color: rgb(140, 50, 50);
+            border-color: rgb(140, 50, 50);
+            color: #ffffff;
+        }
+
+        .btn-custom.btn-primary {
+            background-color: rgb(140, 50, 50);
+            border-color: rgb(140, 50, 50);
+        }
+
+        .btn-custom.btn-primary:hover {
+            background-color: rgb(50, 20, 20);
+        }
+
+        .btn-custom {
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .header-content {
+            padding: 2rem 2rem;
+            text-align: center;
+            color: #2d3436;
+        }
+
+        .header-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .header-subtitle {
+            font-size: 1.5rem; 
+            font-weight: 400;
+        }
+
+        .carousel-container {
+            max-width: 1000px;
+            position: relative;
+            margin: 20px auto;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+        }
+
+        .cta-button {
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            background-color: #2d3436;
+            color: white;
+            border: none;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            background-color: #636e72;
+        }
+
+        .footer {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 6rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-section {
+            flex: 0 1 400px;
+            text-align: center;
+        }
+
+        .footer-section h3 {
+            color: #2d3436;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: #636e72;
+            margin: 0.5rem 0;
+            line-height: 1.6;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #dfe6e9;
+            color: #636e72;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar d-flex justify-content-between align-items-center">
+        <div class="logo">
+            <img src="https://dl.dropboxusercontent.com/s/fy6zjvq6035yfv6ze7btw/logo-QUINCHEAR.png?rlkey=8ev9sdnlye5f4t8r3zjrxsv05&dl=0"
+                alt="Quinchear Logo" class="logo-img">
+        </div>
+		<div>
+			<a><span sec:authentication="name"></span></a>
+		</div>
+        <div class="auth-buttons">
+            <a sec:authorize="isAnonymous()" th:href="@{/homecontroller/login}" class="btn btn-custom btn-outline-primary me-3">
+                INICIAR SESIÓN
+            </a>
+            <a sec:authorize="isAnonymous()" th:href="@{/homecontroller/registrar}" class="btn btn-custom btn-primary">
+                REGISTRARSE
+            </a>
+			<form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+				<input hidden type="submit"/>
+			</form>
+            <a sec:authorize="isAuthenticated()" href="javascript: document.logoutForm.submit()" class="btn btn-custom btn-primary">
+                SALIR
+            </a>
+        </div>
+    </nav>
+
+    <header class="header-content">
+        <h1 class="header-title">LOS MEJORES QUINCHOS</h1>
+        <p class="header-subtitle">EL ESPACIO IDEAL PARA SU EVENTO</p>
+    </header>
+
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="slide">
+                <img src="https://media.tiempodesanjuan.com/p/edac683aaac898576bb61e2d3fe34aba/adjuntos/331/imagenes/000/678/0000678222/790x0/smart/quincho-y-piletajpg.jpg"
+                    alt="Quincho 1">
+            </div>
+            <div class="slide">
+                <img src="https://cdn0.matrimonios.cl/vendor/4902/3_2/960/jpg/bellos-espacios_8_2101-161006388232918.jpeg"
+                    alt="Quincho 2">
+            </div>
+            <div class="slide">
+                <img src="https://i.pinimg.com/originals/47/94/f2/4794f2797327ce40eefbff18dda94865.jpg" alt="Quincho 3">
+            </div>
+            <div class="slide">
+                <img src="https://images.evisos.com.ar/2013/09/28/alquiler-de-quincho-para-eventos_d6ee61310_3.jpg"
+                    alt="Quincho 4">
+            </div>
+            <div class="slide">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_635736-MLA51310654986_082022-N.webp" alt="Quincho 5">
+            </div>
+            <div class="slide">
+                <img src="https://cuatrovientoscye.cl/wp-content/uploads/2023/08/Luces-Para-Fiestas-en-Quinchos-o-Parcelas-1-1024x683.jpg"
+                    alt="Quincho 6">
+            </div>
+            <div class="slide">
+                <img src="https://durlock.com/files/news/30.jpg" alt="Quincho 7">
+            </div>
+            <div class="slide">
+                <img src="https://cdn0.matrimonios.cl/vendor/4902/3_2/960/jpg/amplia-area-verde_8_2101-161006387639578.jpeg"
+                    alt="Quincho 8">
+            </div>
+        </div>
+    </div>
+    <button class="cta-button" type="button" mdb-ripple-init>
+        <a th:href="@{/propiedad/mostrarPropiedades}">VISITE NUESTRAS PROPUESTAS</a>
+    </button>
+    <button sec:authorize="hasAuthority('PROPIETARIO')" class="cta-button" type="button" mdb-ripple-init>
+        <a th:href="@{/propiedad/registrar}">REGISTRE SU PROPIEDAD</a>
+    </button>
+    <button sec:authorize="hasAuthority('ADMINISTRADOR')"class="cta-button" type="button" mdb-ripple-init>
+        <a th:href="@{/usuario/inicio}">ACCEDA AL LISTADO DE USUARIOS</a>
+    </button>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sobre Nosotros</h3>
+                <p>Quinchear es tu mejor opción para encontrar el espacio perfecto para tu evento. Conectamos
+                    anfitriones con personas que buscan lugares únicos.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>Email: info@quinchear.com</p>
+                <p>Teléfono: +54 11 1234-5678</p>
+                <p>Dirección: Av. Principal 123, Bs. As.</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Quinchear. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            const offset = -currentSlide * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+        }
+        // Auto-avance cada 4 segundos
+        setInterval(nextSlide, 4000);
+    </script>
+
+</body>
+
+</html>

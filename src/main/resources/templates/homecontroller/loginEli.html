@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+     <a th:text="${error}"></a>    
+    </<div>
+    <form th:action="@{/homecontroller/logincheck}" method="POST"><!-- a traves de un post va a mandar al user con los datos del formulario a la direccion establecida -->
+        
+            <li>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="txtNombre" name="nombre" th:value="*{nombre}" 
+                       placeholder="Ingrese su nombre"/>
+            </li>
+            <br>
+            <br>
+            <li>
+                <label for="contraseña">Contraseña:</label>
+                <input type="password" id="txtContraseña" name="contrasena" th:value="*{contrasena}"
+                       placeholder="Ingrese su contraseña"/>
+            </li>
+                    
+            <li class="button">
+                <button type="submit">INGRESAR</button>
+            </li>
+    </form>
+    </body>
+</html>

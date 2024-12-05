@@ -1,0 +1,113 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">  
+    <title>Registrar</title>  
+    <style>  
+        body {  
+            background-image: url('https://i.imgur.com/nzp6cUQ.jpegpg');  
+            background-size: cover;  
+            background-position: top;  
+            background-repeat: no-repeat;  
+            min-height: 100vh;  
+            padding: 20px;  
+        }  
+        .container {  
+            max-width: 600px;  
+            background-color: rgba(255, 255, 255, 0.8);  
+            padding: 20px;  
+            border-radius: 8px;  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  
+        }  
+        .form-control:focus {  
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;  
+            border-color: #80bdff;  
+            box-shadow: 0 0 5px rgba(0,123,255,.5);  
+        }  
+        .btn {  
+            transition: transform 0.2s ease;  
+            margin-right: 5px; /* Espacio entre botones */  
+        }  
+        .btn:hover {  
+            transform: scale(1.05);  
+        }  
+        .confirmation-message {  
+            display: none;  
+            margin-top: 20px;  
+            color: green;  
+            text-align: center;  
+        }  
+    </style>  
+</head>  
+<body> 
+    <div>
+     <a th:text="${error}"></a>    
+    </<div>
+    <div class="container mt-5">  
+        <h1 class="text-center mb-4">Registro de Usuario</h1>  
+        <form th:action="@{/homecontroller/registro}" id="modForm" action="A" method="POST" class="shadow p-4 rounded bg-light">  
+            <div class="mb-3">  
+                <input type="text" id="nombre" class="form-control" name="nombre" th:value="*{nombre}" placeholder="Ingrese su Nombre" required>  
+            </div>  
+            <div class="mb-3">  
+                <input type="text" id="name" class="form-control" name="apellido" th:value="*{apellido}" placeholder="Ingreses su Apellido" required>  
+            </div> 
+            <div class="mb-3">  
+                <input type="text" class="form-control" name="email" th:value="*{mail}" placeholder="Email" required>  
+            </div>  
+             
+            <div class="mb-3">  
+                <label for="rol"class="form-label">Seleccione su Rol</label>   
+                <select th:object="${idRolSeleccionado}" class="form-select" id="idRolSeleccionado" name="idRolSeleccionado">  
+                    <option th:each="rolAlternativo : ${roles}" 
+                        th:value="${rolAlternativo.getId()}"
+                        th:text="${rolAlternativo.getDescripcion()}"/>
+                    </option>
+                </select>  
+             </div> 
+            <div class="mb-3">  
+                <input type="password" class="form-control" id="txtContraseña" name="contrasena" th:value="*{contrasena}" placeholder="Contraseña" required>  
+            </div> 
+            <div class="mb-3">  
+                <input type="password" class="form-control" id="recontraseña" name="contrasena2" th:value="*{contrasena2}" placeholder="Reingrese su Contraseña" required>  
+            </div> 
+            <button type="submit" class="btn btn-primary btn-sm">Registrar</button>
+            <!--
+            <button type="button" class="btn btn-success btn-sm" id="modifyButton">Modificar</button>  
+            <button type="button" class="btn btn-danger btn-sm" id="deleteButton">Eliminar</button>  
+            <div id="confirmationMessage" class="confirmation-message">Registro exitoso!</div>  
+            -->
+            </form>  
+    </div> 
+        <!--
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>  
+    <script>  
+        document.getElementById('modForm').addEventListener('submit', function(e) {  
+            e.preventDefault(); // Evita el envío del formulario  
+            const confirmationMessage = document.getElementById('confirmationMessage');  
+            confirmationMessage.style.display = 'block'; // Muestra el mensaje de confirmación  
+            confirmationMessage.classList.add('fade-in'); // Añade un efecto de desvanecimiento  
+            
+            // Simula el envío  
+            setTimeout(() => {  
+                this.reset(); // Reinicia el formulario  
+                confirmationMessage.style.display = 'none'; // Oculta el mensaje  
+            }, 2000); // Cambia esto por el tiempo que consideres necesario  
+        });  
+
+        // Función para manejar el botón de modificar  
+        document.getElementById('modifyButton').addEventListener('click', function() {  
+            // Aquí puedes agregar la lógica para modificar el usuario  
+            alert('Modificar usuario'); // Mensaje de ejemplo  
+        });  
+
+        // Función para manejar el botón de eliminar  
+        document.getElementById('deleteButton').addEventListener('click', function() {  
+            document.getElementById('modForm').reset(); // Reinicia el formulario  
+            alert('Formulario eliminado'); // Mensaje de ejemplo  
+        });  
+    </script> --> 
+</body>  
+</html>

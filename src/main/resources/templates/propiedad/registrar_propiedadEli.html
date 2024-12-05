@@ -1,0 +1,101 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Registrar Propiedad para Alquiler</title>  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
+    <style>  
+        body {  
+            background-color: #f8f9fa;  
+        }  
+        .form-control {  
+            margin-bottom: 10px;  
+        }  
+        .img-preview {  
+            max-width: 100%;  
+            max-height: 200px;  
+            margin-top: 10px;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div class="container">  
+        <h2 class="text-center mb-4">Registre la Propiedad </h2>  
+        <form id="spaceForm" th:action="@{/propiedad/upload}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">  
+                <label for="nombre">Nombre del Espacio:</label>  
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa el nombre del espacio" required>  
+            </div>  
+            <div class="form-group">  
+                <label for="descripcion">Descripción Detallada:</label>  
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="4" placeholder="Describe el espacio y sus características" required></textarea>  
+            </div>  
+            <div class="form-group">  
+                <label for="fotos">Subir Fotos:</label>  
+                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" multiple required>  
+                <div id="imagePreview" class="mt-2"></div>  
+            </div>  
+            <div class="form-group">  
+                <label for="servicios">Servicios Incluidos:</label>  
+                <textarea class="form-control" id="servicios" rows="2" placeholder="Escribe los servicios incluidos (ej: Wi-Fi, piscina, parrilla)" required></textarea>  
+            </div>  
+            <div class="form-group">  
+                <label for="precio">Precio por Hora:</label>  
+                <input type="number" class="form-control" id="precio" placeholder="Ingresa el precio por hora" required>  
+            </div>  
+            <button type="submit" class="btn btn-primary btn-block">Registrar Espacio</button>  
+        </form>  
+        <div class="text-center mt-3">  
+            <a href="/login" class="text-dark">Volver al Inicio</a>  
+        </div> 
+        
+    </div>  
+
+    <!-- Bootstrap JS and dependencies -->  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>  
+    <script>  
+        // Previsualización de imágenes  
+        document.getElementById('imagen').addEventListener('change', function() {  
+            const files = this.files;  
+            const previewDiv = document.getElementById('imagePreview');  
+            previewDiv.innerHTML = '';  
+
+            for (let i = 0; i < files.length; i++) {  
+                const file = files[i];  
+
+                if (file) {  
+                    const reader = new FileReader();  
+                    reader.onload = function(e) {  
+                        const imgElement = document.createElement('img');  
+                        imgElement.src = e.target.result;  
+                        imgElement.classList.add('img-preview');  
+                        previewDiv.appendChild(imgElement);  
+                    }  
+                    reader.readAsDataURL(file);  
+                } 
+            }  
+        });  
+
+        // Manejo del formulario de registro
+        /*
+        document.getElementById('spaceForm').addEventListener('submit', function(event) {  
+            event.preventDefault();  
+            const nombre = document.getElementById('nombre').value;  
+            const descripcion = document.getElementById('descripcion').value;  
+            const servicios = document.getElementById('servicios').value;  
+            const precio = document.getElementById('precio').value;  
+
+            // Aquí  agregar lógica para enviar  datos al backend  
+            console.log({ nombre, descripcion, servicios, precio });  
+            alert("Espacio registrado con éxito");  
+            this.reset(); // Resetea el formulario  
+            document.getElementById('imagePreview').innerHTML = ''; // Limpia la previsualización
+            
+        });
+        */
+    </script>  
+</body>  
+</html>  
+

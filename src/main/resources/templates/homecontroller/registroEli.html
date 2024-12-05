@@ -1,0 +1,108 @@
+<!DOCTYPE html ORIGINAL>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      form {
+        /* Centrar el formulario en la página */
+        margin: 0 auto;
+        width: 500px;
+        /* Esquema del formulario */
+        padding: 2em;
+        border: 2px solid #000000;
+        border-radius: 2em;
+      }      
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }      
+      form li + li {
+        margin-top: 2em;
+      }      
+      label {
+        /* Tamaño y alineación uniforme */
+        display: inline-block;
+        width: 160px;
+        text-align: right;
+      }      
+      input,
+      textarea {
+        /* Tipo de letra */
+        font: 1em sans-serif;      
+        /* Tamaño del cuadro de texto */
+        width: 300px;
+        box-sizing: border-box;      
+        /* Hacer coincidir los bordes del campo del formulario */
+        border: 2px solid #999;
+      }      
+      input:focus,
+      textarea:focus {
+        /* Destacado adicional para elementos que tienen el cursor */
+        border-color: #000;
+      }      
+      textarea {
+        vertical-align: top;      
+        height: 5em;
+      }      
+      .button {
+        list-style: none        
+      } 
+      button {
+        margin-left: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div>
+     <a th:text="${error}"></a>    
+    </<div>
+    <form th:action="@{/homecontroller/registro}" method="POST"><!-- a traves de un post va a mandar al user con los datos del formulario a la direccion establecida -->
+        
+            <li>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="txtNombre" name="nombre" th:value="*{nombre}" 
+                       placeholder="Ingrese su nombre"/>
+                
+            </li>
+            <li>
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="txtApellido" name="apellido" th:value="*{apellido}"
+                       placeholder="Ingrese su apellido"/>
+            </li>
+            <li>
+                <label for="mail">Correo Electronico:</label>
+                <input type="text" id="txtMail" name="email" th:value="*{mail}"
+                       placeholder="Ingrese su mail"/>
+            </li>
+            <li>
+                <label for="rol">ROL</label>
+                <select th:object="${idRolSeleccionado}" id="idRolSeleccionado" name="idRolSeleccionado">
+                    <option th:each="rolAlternativo : ${roles}" 
+                        th:value="${rolAlternativo.getId()}"
+                        th:text="${rolAlternativo.getDescripcion()}" />
+                    </option>
+                </select>
+                
+                       
+            </li>
+            <li>
+                <label for="contraseña">Contraseña:</label>
+                <input type="password" id="txtContraseña" name="contrasena" th:value="*{contrasena}"
+                       placeholder="Ingrese su contraseña"/>
+            </li>
+            <li>
+                <label for="recontraseña">Repetir Contraseña:</label>
+                <input type="password" id="recontraseña" name="contrasena2" th:value="*{contrasena2}"
+                       placeholder="Reingrese su contraseña"/>
+            </li>
+         
+            <li class="button">
+                <button type="submit">Registrarse</button>
+            </li>
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Listado de Usuario</title>  
+    <style>  
+        body {  
+            background-image: url('https://i.imgur.com/sNbMmFi.jpeg'); 
+            background-size: 100%;
+            background-position: top;
+            min-height: 100vh;  
+            padding: 20px;  
+            font-family: Arial, sans-serif;  
+        }  
+        
+        .form-control {  
+            margin-bottom: 10px;  
+            width: 100%;  
+            position: relative;  
+            z-index: 1; /* Asegura que los campos estén por encima de la imagen de fondo */  
+        } 
+        .form-container {  
+            background-color: rgba(255, 255, 255, 0.9);  
+            padding: 20px;  
+            border-radius: 8px;  
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  
+            position: relative; /* Necesario para el posicionamiento de la imagen de fondo */  
+            overflow: hidden; /* Para asegurarse de que la imagen no salga del contenedor */  
+        }  
+
+        h2 {  
+            color: #343a40;  
+            position: relative;  
+            z-index: 1; /* Asegura que el título esté por encima de la imagen de fondo */  
+        }  
+        .text-dark {  
+            color: #343a40 !important;  
+        }  
+        table {  
+            width: 100%;  
+            border-collapse: collapse;  
+            margin-top: 20px;  
+            position: relative;  
+            z-index: 1; /* Asegura que la tabla esté por encima de la imagen de fondo */  
+        }  
+        th, td {  
+            padding: 10px;  
+            text-align: left;  
+            border: 1px solid #dee2e6;  
+            position: relative;  
+            z-index: 1; /* Asegura que las celdas estén por encima de la imagen de fondo */  
+        }  
+        th {  
+            background-color: #f1f1f1;  
+        }  
+        button {  
+            background-color: #007bff; /* Bootstrap primary color */  
+            color: white;  
+            border: none;  
+            border-radius: 5px;  
+            padding: 10px 15px;  
+            cursor: pointer;  
+            transition: background-color 0.3s ease;  
+            position: relative;  
+            z-index: 1; /* Asegura que el botón esté por encima de la imagen de fondo */  
+        }  
+        button:hover {  
+            background-color: #0056b3; /* Darker shade on hover */  
+        }  
+        a {  
+            text-decoration: none;  
+            color: #007bff;  
+            border: 1px solid transparent;  
+            border-radius: 5px;  
+            padding: 5px 10px;  
+            transition: background-color 0.3s ease, color 0.3s ease;  
+        }  
+        a:hover {  
+            background-color: rgba(0, 123, 255, 0.1);  
+            color: #0056b3;  
+        }  
+    </style> --> 
+</head>  
+<body>  
+    <div class="container form-container mt-5">  
+        <h2>Listado de Usuario</h2>  
+        <a th:href="@{/homecontroller/inicio}" class="btn btn-custom btn-primary">INICIO</a>
+        <table>  
+            <thead>  
+                <tr>  
+                    <th>Nombre</th> 
+                    <th>Apellido</th>
+                    <th>Rol</th>  
+                    <th></th>  
+                </tr>  
+            </thead>  
+            <tbody>  
+                <tr th:each="usuario: ${listaDeUsuario}">  
+                    <td th:text="${usuario.nombre}"></td> 
+                    <td th:text="${usuario.apellido}"></td>
+                    <td th:text="${usuario.rol.descripcion}"></td>  
+                    <td>  
+                        <a th:href="@{/usuario/modificarUsuario/{id}(id=${usuario.id})}">Modificar</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/usuario/eliminar/{id}(id=${usuario.id})}">Eliminar</a>            
+                    </td>            
+                </tr>  
+            </tbody>  
+        </table>  
+
+        <form th:action="@{/usuario/buscarPorNombre}" th:object="${user}" method="POST">  
+            <label for="txtName">Ingrese el nombre a buscar:</label>  
+            <input type="text" id="txtName" name="txtName" th:field="*{nombre}" placeholder="Ingrese el nombre a buscar"/>  
+            <button type="submit">Enviar</button>  
+        </form>  
+    </div>  
+</body>  
+</html>
